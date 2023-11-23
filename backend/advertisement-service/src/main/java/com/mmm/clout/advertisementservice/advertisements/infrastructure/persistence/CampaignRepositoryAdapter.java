@@ -1,19 +1,17 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence;
 
 import static com.mmm.clout.advertisementservice.advertisements.domain.QCampaign.campaign;
+import static com.mmm.clout.advertisementservice.image.domain.QAdvertiseSign.advertiseSign;
+import static com.mmm.clout.advertisementservice.image.domain.QImage.image;
 import static org.springframework.util.StringUtils.hasText;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
-import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
-import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
-import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
-import com.mmm.clout.advertisementservice.advertisements.domain.Region;
+import com.mmm.clout.advertisementservice.advertisements.domain.*;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
@@ -83,6 +81,7 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
         return queryFactory.query()
             .select(campaign)
             .from(campaign)
+            .leftJoin(campaign.advertiserSign, advertiseSign).fetchJoin()
             .where(
                 keywordContains(condition.getKeyword()),
                 priceBetween(condition.getMinPrice(), condition.getMaxPrice()),
