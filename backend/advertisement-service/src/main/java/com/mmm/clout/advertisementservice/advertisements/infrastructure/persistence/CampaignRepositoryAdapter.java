@@ -1,6 +1,8 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence;
 
 import static com.mmm.clout.advertisementservice.advertisements.domain.QCampaign.campaign;
+import static com.mmm.clout.advertisementservice.image.domain.QAdvertiseSign.advertiseSign;
+import static com.mmm.clout.advertisementservice.image.domain.QImage.image;
 import static org.springframework.util.StringUtils.hasText;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
@@ -79,8 +81,7 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
         return queryFactory.query()
             .select(campaign)
             .from(campaign)
-            .leftJoin(campaign.regionList)
-            .leftJoin(campaign.adPlatformList).distinct().fetchJoin()
+            .leftJoin(campaign.advertiserSign, advertiseSign).fetchJoin()
             .where(
                 keywordContains(condition.getKeyword()),
                 priceBetween(condition.getMinPrice(), condition.getMaxPrice()),
