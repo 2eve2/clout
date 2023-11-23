@@ -71,7 +71,6 @@ public class CampaignReader {
     public CampaignReader(Campaign campaign) {
         this.campaignId = campaign.getId();
         this.title = campaign.getTitle();
-
         this.price = campaign.getPrice();
         this.details = campaign.getDetails();
         this.deleteAt = campaign.getDeletedAt();
@@ -90,9 +89,9 @@ public class CampaignReader {
         this.maxClouterAge = campaign.getMaxClouterAge();
         this.minFollower = campaign.getMinFollower();
         this.isEnded = campaign.getIsEnded();
-        this.adPlatformList = campaign.getAdPlatformList().stream().map(v -> v.toString()).collect(Collectors.toList());
-        this.regionList = campaign.getRegionList().stream().map(v -> v.toString()).collect(Collectors.toList());;
-        this.imageList = campaign.getImageList().stream().map(v -> new ImageResponse(v)).collect(Collectors.toList());
+        this.adPlatformList = campaign.getAdPlatformList().stream().map(Enum::toString).collect(Collectors.toList());
+        this.regionList = campaign.getRegionList().stream().map(Enum::toString).collect(Collectors.toList());;
+        this.imageList = campaign.getImageList().stream().map(ImageResponse::new).collect(Collectors.toList());
         this.advertiserSign = campaign.getAdvertiserSign();
     }
 }
