@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.FeignCampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
@@ -25,7 +26,7 @@ public class CampaignResponse {
     private Long campaignId;
 
     @Schema(description = "광고 플랫폼 리스트")
-    private List<AdPlatform> adPlatformList;
+    private List<String> adPlatformList;
 
     @Schema(description = "광고비")
     private Long price;
@@ -84,38 +85,39 @@ public class CampaignResponse {
     @Schema(description = "광고 등록자 (광고주) 고유 식별자 id")
     private Long registerId;
 
+    @Schema(description = "캠페인에 등록된 이미지 목록")
     private List<ImageResponse> imageList;
 
-    public static CampaignResponse from(Campaign campaign) {
+    public static CampaignResponse from(CampaignReader campaignReader) {
         return new CampaignResponse(
-            campaign.getId(),
-            campaign.getAdPlatformList(),
-            campaign.getPrice(),
-            campaign.getDetails(),
-            campaign.getDeletedAt(),
-            campaign.getTitle(),
-            campaign.getAdCategory(),
-            campaign.getIsPriceChangeable(),
-            campaign.getIsDeliveryRequired(),
-            campaign.getNumberOfRecruiter(),
-            campaign.getNumberOfApplicants(),
-            campaign.getNumberOfSelectedMembers(),
-            campaign.getOfferingDetails(),
-            campaign.getSellingLink(),
-            campaign.getApplyStartDate(),
-            campaign.getApplyEndDate(),
-            campaign.getMinClouterAge(),
-            campaign.getMaxClouterAge(),
-            campaign.getMinFollower(),
-            campaign.getIsEnded(),
-            campaign.getRegisterId(),
-            null
+            campaignReader.getCampaignId(),
+            campaignReader.getAdPlatformList(),
+            campaignReader.getPrice(),
+            campaignReader.getDetails(),
+            campaignReader.getDeleteAt(),
+            campaignReader.getTitle(),
+            campaignReader.getAdCategory(),
+            campaignReader.getIsPriceChangeable(),
+            campaignReader.getIsDeliveryRequired(),
+            campaignReader.getNumberOfRecruiter(),
+            campaignReader.getNumberOfApplicants(),
+            campaignReader.getNumberOfSelectedMembers(),
+            campaignReader.getOfferingDetails(),
+            campaignReader.getSellingLink(),
+            campaignReader.getApplyStartDate(),
+            campaignReader.getApplyEndDate(),
+            campaignReader.getMinClouterAge(),
+            campaignReader.getMaxClouterAge(),
+            campaignReader.getMinFollower(),
+            campaignReader.getIsEnded(),
+            campaignReader.getAdvertiserId(),
+            campaignReader.getImageList()
         );
     }
     public static CampaignResponse from(FeignCampaignReader reader) {
         return new CampaignResponse(
             reader.getCampaign().getId(),
-            reader.getCampaign().getAdPlatformList(),
+            reader.getCampaign().getAdPlatformList().stream().map(v -> v.toString()).collect(Collectors.toList()),
             reader.getCampaign().getPrice(),
             reader.getCampaign().getDetails(),
             reader.getCampaign().getDeletedAt(),

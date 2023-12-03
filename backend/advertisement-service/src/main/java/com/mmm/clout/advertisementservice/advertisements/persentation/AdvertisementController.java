@@ -2,7 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReaderWithAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
@@ -170,7 +170,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {
 
-        Page<CampaignReader> searched = advertisementFacade.search(
+        Page<CampaignReaderWithAdvertiser> searched = advertisementFacade.search(
             PageRequest.of(page, size),
             SearchCondition.from(
                 category,

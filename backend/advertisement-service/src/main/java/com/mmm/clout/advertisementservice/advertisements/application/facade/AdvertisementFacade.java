@@ -5,7 +5,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.command.Cre
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReaderWithAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.FeignCampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import lombok.RequiredArgsConstructor;
@@ -43,11 +43,11 @@ public class AdvertisementFacade {
         deleteCampaignProcessor.execute(advertisementId);
     }
 
-    public CampaignReader get(Long advertisementId) {
+    public CampaignReaderWithAdvertiser get(Long advertisementId) {
         return getCampaignProcessor.execute(advertisementId);
     }
 
-    public List<CampaignReader> getTop10() {
+    public List<CampaignReaderWithAdvertiser> getTop10() {
         return getTop10CampaignListProcessor.execute();
     }
 
@@ -60,7 +60,7 @@ public class AdvertisementFacade {
     }
 
 
-    public Page<CampaignReader> search(Pageable pageable, SearchCondition condition) {
+    public Page<CampaignReaderWithAdvertiser> search(Pageable pageable, SearchCondition condition) {
         return searchCampaignListProcessor.execute(pageable, condition);
     }
 
