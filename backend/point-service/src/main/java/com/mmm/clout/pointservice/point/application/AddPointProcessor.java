@@ -1,6 +1,6 @@
 package com.mmm.clout.pointservice.point.application;
 
-import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
+import com.mmm.clout.pointservice.point.application.command.AddPointCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.domain.exception.PointNotFoundException;
@@ -10,18 +10,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-public class ReducePointProcessor {
+public class AddPointProcessor {
 
     private final PointRepository pointRepository;
     private final PointTransactionRepository pointTransactionRepository;
 
-
     @Transactional
-    public PointTransaction execute(ReduceCommand command) {
+    public PointTransaction execute(AddPointCommand command) {
         Point point = pointRepository.findByMemberId(command.getMemberId())
             .orElseThrow(PointNotFoundException::new);
-        point.reduce(command.getReducingPoint());
-        PointTransaction usedPointTsx = PointTransaction.reduce(point, command.getReducingPoint(), command.getPointCategory(), command.getCounterParty());
-        return pointTransactionRepository.save(usedPointTsx);
+        point.add(command.getAddingPoint());
+        PointTransaction pts = PointTransaction.add(point, command.getAddingPoint(), command.getPointCategory(), command.getCounterParty());
+        return pointTransactionRepository.save(pts);
     }
 }

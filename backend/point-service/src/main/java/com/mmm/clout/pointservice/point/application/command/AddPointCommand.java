@@ -6,15 +6,14 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReduceCommand {
+public class AddPointCommand {
 
     private Long memberId;
 
-    private Long reducingPoint;
+    private Long addingPoint;
 
     private PointCategory pointCategory;
 
     private String counterParty;
-
 
 }
