@@ -21,7 +21,7 @@ public class AdvertiserController implements AdvertiserControllerDocs {
 
     private final AdvertiserFacade advertiserFacade;
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<CreateAdrResponse> create(
         @RequestBody @Valid CreateAdrRequest createAdrRequest
     ) {

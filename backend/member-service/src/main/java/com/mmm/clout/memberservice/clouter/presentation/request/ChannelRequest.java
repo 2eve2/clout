@@ -21,7 +21,7 @@ public class ChannelRequest {
     private String name;
 
     @NotNull
-    @Schema(description = "자신의 플랫폼", defaultValue = "INSTAGRAM")
+    @Schema(description = "자신의 플랫폼")
     private Platform platform;
 
     @NotBlank

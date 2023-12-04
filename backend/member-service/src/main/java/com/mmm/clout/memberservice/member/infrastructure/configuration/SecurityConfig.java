@@ -64,7 +64,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(jwtAccessDeniedHandler) // cutomAccessDeniedHandler
                 .and()
                 .authorizeRequests() // '인증'이 필요한 매핑 정보 입력
-                .antMatchers("/v1/members/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

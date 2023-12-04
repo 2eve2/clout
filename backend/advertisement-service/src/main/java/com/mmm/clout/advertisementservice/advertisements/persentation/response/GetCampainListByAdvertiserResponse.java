@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import java.util.List;
@@ -19,9 +20,10 @@ public class GetCampainListByAdvertiserResponse {
 
     public static GetCampainListByAdvertiserResponse from(CampaignListReader reader) {
         Page<Campaign> campaigns = reader.getCampaignList();
+        List<CampaignReader> campaignReaders = campaigns.stream().map(v -> new CampaignReader(v)).collect(Collectors.toList());
         AdvertiserInfo advertiser = reader.getAdvertiserInfo();
         return new GetCampainListByAdvertiserResponse(
-            campaigns.stream().map(CampaignResponse::from).collect(Collectors.toList()),
+            campaignReaders.stream().map(CampaignResponse::from).collect(Collectors.toList()),
             AdvertiserResponse.from(advertiser)
         );
     }

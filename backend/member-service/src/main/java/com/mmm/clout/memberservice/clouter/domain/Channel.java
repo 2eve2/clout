@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Embeddable
 @Getter
@@ -21,7 +19,6 @@ public class Channel {
     @Column(length = 20)
     private String name;
 
-    @Enumerated(EnumType.STRING)
     private Platform platform;
 
     @Column(length = 600)

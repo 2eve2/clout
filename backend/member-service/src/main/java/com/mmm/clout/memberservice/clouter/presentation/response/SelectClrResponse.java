@@ -5,8 +5,6 @@ import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Region;
 import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.response.AddressResponse;
-import com.mmm.clout.memberservice.image.domain.Image;
-import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,8 +47,10 @@ public class SelectClrResponse {
     @Schema(description = "개인 채널 리스트")
     private List<ChannelResponse> channelList;
 
-    @Schema(description = "원하는 최소 금액")
-    private Long minCost;
+    private HopeCostResponse hopeCost;
+
+    @Schema(description = "네고 가능 여부")
+    private boolean negoable;
 
     @Schema(description = "광고를 원하는 카테고리 목록")
     private List<String> categoryList;
@@ -59,10 +59,6 @@ public class SelectClrResponse {
     private List<String> regionList;
 
     private AddressResponse address;
-
-    private Integer countOfContract;
-
-    private List<ImageResponse> imageResponses;
 
     public SelectClrResponse(ClouterReader clouterReader) {
 
@@ -81,27 +77,15 @@ public class SelectClrResponse {
         this.phoneNumber = clouterReader.getPhoneNumber();
         this.channelList = clouterReader.getChannelList()
             .stream().map(ChannelResponse::new).collect(Collectors.toList());
-        this.minCost = clouterReader.getMinCost();
+        this.hopeCost = new HopeCostResponse(clouterReader.getHopeCost());
+        this.negoable = clouterReader.isNegoable();
         this.categoryList = clouterReader.getCategoryList();
         this.regionList = clouterReader.getRegionList();
         this.address = new AddressResponse(clouterReader.getAddress());
-        this.countOfContract = clouterReader.getCountOfContract();
-        this.imageResponses = clouterReader.getImageResponses();
     }
 
     public static SelectClrResponse from(ClouterReader clouterReader) {
         SelectClrResponse response = new SelectClrResponse(clouterReader);
         return response;
-    }
-
-    public void blur() {
-        this.userId = "@@@@@";
-        this.minCost = -1L;
-        this.address.blur();
-        this.countOfContract= -1;
-        this.name = "@@@@@@";
-        this.birthday = LocalDate.now();
-        this.age = -1;
-        this.phoneNumber = "@@@@@@@@";
     }
 }
