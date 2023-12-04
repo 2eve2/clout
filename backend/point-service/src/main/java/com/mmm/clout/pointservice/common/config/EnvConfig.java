@@ -1,4 +1,4 @@
-package com.mmm.clout.advertisementservice.common.config;
+package com.mmm.clout.pointservice.common.config;
 
 import java.util.Objects;
 import java.util.Properties;
