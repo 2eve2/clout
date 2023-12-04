@@ -1,5 +1,6 @@
 server:
-  port: 8890
+#  port: 8890
+  port: 0
 
 spring:
   config:
@@ -10,10 +11,10 @@ spring:
   application:
     name: contract-service
   datasource:
-    url: jdbc:mariadb://3.38.213.43:3306/contractdb
+    url: ${contract.mariadb.local.url}
     driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: zmffkdnxm409!
+    username: ${contract.mariadb.local.username}
+    password: ${contract.mariadb.local.password}
   jpa:
     properties:
       hibernate:
@@ -32,7 +33,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: https://eureka.clouter.kr/eureka
+      defaultZone: ${contract.eureka.service-url}
 
 
 #eureka:
@@ -46,9 +47,9 @@ eureka:
 #      defaultZone: https://eureka.clouter.kr/eureka
 
 jwt:
-  secret: VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=
-  refresh-token-validity-in-seconds: 1209600 # 14?
-  access-token-validity-in-seconds: 43200 # 12??
+  secret: ${member.jwt.secret}
+  refresh-token-validity-in-seconds: 1209600
+  access-token-validity-in-seconds: 43200
 
 springdoc:
   swagger-ui:

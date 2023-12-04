@@ -41,7 +41,7 @@ public class PointTransactionRepositoryAdapter implements PointTransactionReposi
             .where(
                 pointEq(point).and(categoryEq(category))
             )
-            .orderBy(pointTransaction.createdAt.desc())
+            .orderBy(pointTransaction.createdAt.asc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();

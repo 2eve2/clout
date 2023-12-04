@@ -1,7 +1,7 @@
 package com.mmm.clout.pointservice.point.application;
 
+import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
-import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.domain.exception.PointNotFoundException;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
@@ -17,11 +17,11 @@ public class ReducePointProcessor {
 
 
     @Transactional
-    public void execute(Long memberId, Long reducingPoint, PointCategory pointCategory) {
-        Point point = pointRepository.findByMemberId(memberId)
-            .orElseGet(() -> pointRepository.save(Point.create(memberId, 0L)));
-        point.reducePoint(reducingPoint);
-        PointTransaction usedPointTsx = PointTransaction.usePoint(point, memberId, pointCategory);
-        pointTransactionRepository.save(usedPointTsx);
+    public PointTransaction execute(ReduceCommand command) {
+        Point point = pointRepository.findByMemberId(command.getMemberId())
+            .orElseThrow(PointNotFoundException::new);
+        point.reduce(command.getReducingPoint());
+        PointTransaction usedPointTsx = PointTransaction.reduce(point, command.getReducingPoint(), command.getPointCategory(), command.getCounterParty());
+        return pointTransactionRepository.save(usedPointTsx);
     }
 }
