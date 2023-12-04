@@ -20,6 +20,14 @@ spring:
             postLogger: true
       routes:
         # MEMBER-SERVICE routes
+        # 둘러보기용 클라우터 조회 인증 X
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/v1/clouters/noneAuth/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
         # 인증 인가
         - id: member-service
           uri: lb://MEMBER-SERVICE
@@ -134,7 +142,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/notification-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
 
         # IMAGE-SERVICE route
         # 이미지 서비스 api 디폴트 인증 적용 X
