@@ -28,7 +28,9 @@ public class UpdateClrCommand {
 
     private List<ChannelCommand> channelList;
 
-    private Long minCost;
+    private HopeCostCommand hopeCost;
+
+    private boolean negoable;
 
     private List<Category> categoryList;
 

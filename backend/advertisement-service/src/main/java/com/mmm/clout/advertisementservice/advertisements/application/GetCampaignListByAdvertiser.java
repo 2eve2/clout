@@ -1,13 +1,12 @@
 package com.mmm.clout.advertisementservice.advertisements.application;
 
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

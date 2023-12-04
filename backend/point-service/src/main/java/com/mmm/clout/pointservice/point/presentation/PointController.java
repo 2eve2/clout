@@ -1,26 +1,15 @@
 package com.mmm.clout.pointservice.point.presentation;
 
-import com.mmm.clout.pointservice.common.docs.PointControllerDocs;
-import com.mmm.clout.pointservice.point.presentation.request.CreatePointRequest;
+import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.facade.PointFacade;
-import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
-import com.mmm.clout.pointservice.point.presentation.request.AddPointRequest;
-import com.mmm.clout.pointservice.point.presentation.response.AddPointResponse;
-import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
-import com.mmm.clout.pointservice.point.presentation.response.CreatePointResponse;
-import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
-import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
-import com.mmm.clout.pointservice.point.presentation.response.ReducePointResponse;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
+import java.util.List;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/points")
 @RequiredArgsConstructor
-public class PointController implements PointControllerDocs {
+public class PointController {
 
     private final PointFacade pointFacade;
 
@@ -41,35 +30,22 @@ public class PointController implements PointControllerDocs {
      * 충전
      */
     @PostMapping("/charge")
-    public ResponseEntity<ChargePointResponse> charge(
-        @Valid @RequestBody ChargePointRequest request
+    public ResponseEntity<Void> charge(
+        @RequestBody ChargePointRequest request
     ) {
-        ChargePointResponse result = ChargePointResponse.from(
-            pointFacade.charge(request.toCommand())
-        );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        pointFacade.charge(request.toCommand());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
-     * 포인트 차감/사용 (-)
+     * 차감 (포인트 사용)
      */
     @PostMapping("/reduce")
-    public ResponseEntity<ReducePointResponse> reduce(
-        @Valid @RequestBody ReducePointRequest request
+    public ResponseEntity<Void> reduce(
+        @RequestBody ReducePointRequest request
     ) {
-        ReducePointResponse result = ReducePointResponse.from(pointFacade.reduce(request.toCommand()));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 포인트 지급 (+)
-     */
-    @PostMapping("/add")
-    public ResponseEntity<AddPointResponse> add(
-        @Valid @RequestBody AddPointRequest request
-    ) {
-        AddPointResponse result = AddPointResponse.from(pointFacade.add(request.toCommand()));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        pointFacade.reduce(request.toCommand());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -77,9 +53,9 @@ public class PointController implements PointControllerDocs {
      */
     @PostMapping("/withdrawal")
     public ResponseEntity<Void> withdraw(
-        @Valid @RequestBody WithdrawPointRequest request
+        @RequestBody WithdrawPointRequest request
     ) {
-        pointFacade.withdrawal(request.toCommand());
+        pointFacade.withdraw(request.toCommand());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -90,45 +66,16 @@ public class PointController implements PointControllerDocs {
     public ResponseEntity<GetMemberTotalPointResponse> getMemberPoint(
         @RequestParam Long memberId
     ) {
-        GetMemberTotalPointResponse result = GetMemberTotalPointResponse.from(
-            pointFacade.getMemberPoint(memberId));
+        GetMemberTotalPointResponse result = GetMemberTotalPointResponse.from(pointFacade.getMemberPoint(memberId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    /**
-     * 거래내역 조회
-     */
-    @GetMapping("/transactions")
-    public ResponseEntity<CustomPageResponse<PointTransactionResponse>> getTransactionListByType(
+    @GetMapping("/transactions?memberId={memberId}&category={내역category}")
+    public ResponseEntity<Void> getTransactionListByType(
         @RequestParam Long memberId,
-        @RequestParam String category,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size
+        @RequestParam String category
     ) {
-
-        Page<PointTransaction> transactions = pointFacade.getTransactionListByCategory(memberId, category, PageRequest.of(page, size));
-
-        CustomPageResponse<PointTransactionResponse> result = new CustomPageResponse<>(
-            transactions.stream()
-                .map(transaction -> PointTransactionResponse.from(transaction, category))
-                .collect(Collectors.toList()),
-            transactions.getNumber(),
-            transactions.getSize(),
-            transactions.getTotalPages(),
-            transactions.getTotalElements()
-        );
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    /**
-     * 포인트 초기화 (회원가입시 생성)
-     */
-    @PostMapping
-    public ResponseEntity<CreatePointResponse> create(
-        @Valid @RequestBody CreatePointRequest request
-    ) {
-        CreatePointResponse result = CreatePointResponse.from(pointFacade.create(request.getMemberId()));
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        List<PointTransaction> result = pointFacade.getTransactionListByCategory(memberId, category);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

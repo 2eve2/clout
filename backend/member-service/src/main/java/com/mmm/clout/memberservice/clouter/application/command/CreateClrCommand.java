@@ -31,7 +31,9 @@ public class CreateClrCommand {
 
     private List<ChannelCommand> channelList;
 
-    private Long minCost;
+    private HopeCostCommand hopeCost;
+
+    private boolean negoable;
 
     private List<Category> categoryList;
 
@@ -49,7 +51,8 @@ public class CreateClrCommand {
             this.age,
             this.phoneNumber,
             this.channelList.stream().map(ChannelCommand::toValueType).collect(Collectors.toList()),
-            this.minCost,
+            this.hopeCost.toValueType(),
+            this.negoable,
             this.categoryList,
             this.regionList,
             this.address.toValueType()

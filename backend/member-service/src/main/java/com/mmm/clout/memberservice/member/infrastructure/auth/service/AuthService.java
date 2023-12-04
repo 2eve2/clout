@@ -40,7 +40,7 @@ public class AuthService {
 
         Member member = memberService.getUserByUserId(loginDto.getUserId());
 
-        if (!encoder.matches(loginDto.getPassword(), member.getPwd())) throw new PasswordException();
+        if (!encoder.matches(loginDto.getPassword(), member.getPwd())) throw new PasswordException("아이디 또는 비밀번호가 틀렸습니다.");
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
@@ -51,8 +51,7 @@ public class AuthService {
 
         return new LoginReader(
             generateToken(SERVER, authentication.getName(), getAuthorities(authentication)),
-            member.getRole(),
-            member.getId()
+            member.getRole()
             );
     }
 
@@ -66,6 +65,9 @@ public class AuthService {
     @Transactional
     public AuthDto.TokenDto reissue(String requestAccessTokenInHeader, String requestRefreshToken) {
         String requestAccessToken = resolveToken(requestAccessTokenInHeader);
+
+        System.out.println("requestRefreshToken "+requestRefreshToken);
+        System.out.println("requestAccessToken "+requestAccessToken);
 
         Authentication authentication = jwtTokenProvider.getAuthentication(requestAccessToken);
         String principal = getPrincipal(requestAccessToken);
@@ -87,9 +89,9 @@ public class AuthService {
         String authorities = getAuthorities(authentication);
 
         // 토큰 재발급 및 Redis 업데이트
-//        redisService.deleteValues("RT(" + SERVER + "):" + principal); // 기존 RT 삭제
+        redisService.deleteValues("RT(" + SERVER + "):" + principal); // 기존 RT 삭제
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(principal, authorities);
-//        saveRefreshToken(SERVER, principal, tokenDto.getRefreshToken());
+        saveRefreshToken(SERVER, principal, tokenDto.getRefreshToken());
         log.info("리이슈 로직 완료");
         return tokenDto;
     }
