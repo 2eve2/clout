@@ -2,7 +2,6 @@ package com.mmm.clout.memberservice.common;
 
 public enum Category {
 
-    ALL("전체"),
     FASHION_BEAUTY("패션/뷰티"),
     HEALTH_LIFESTYLE("건강/생활"),
     TRAVEL_LEISURE("여행/레저"),

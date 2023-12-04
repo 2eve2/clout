@@ -4,16 +4,10 @@ import com.mmm.clout.advertisementservice.advertisements.domain.exception.Alread
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.mmm.clout.advertisementservice.image.domain.AdvertiseSign;
+import com.mmm.clout.advertisementservice.image.domain.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.Hibernate;
@@ -68,7 +62,11 @@ public class Campaign extends Advertisement {
     @Column(name = "region")
     private List<Region> regionList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "campaign", fetch = FetchType.LAZY)
+    private List<Image> imageList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "campaign")
+    private AdvertiseSign advertiserSign;
 
     @Transactional(readOnly = true)
     public Campaign initialize() {

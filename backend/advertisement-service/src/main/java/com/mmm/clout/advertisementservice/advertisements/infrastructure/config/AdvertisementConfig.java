@@ -109,15 +109,11 @@ public class AdvertisementConfig {
     @Bean
     public SearchCampaignListProcessor searchCampaignListProcessor(
         @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
-        MemberProvider memberProvider,
-        ImageRepository imageRepository,
-        AdvertiseSignRepository advertiseSignRepository
+        MemberProvider memberProvider
     ) {
         return new SearchCampaignListProcessor(
             campaignRepository,
-            memberProvider,
-            imageRepository,
-            advertiseSignRepository
+            memberProvider
         );
     }
 

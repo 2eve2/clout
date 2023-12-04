@@ -2,8 +2,6 @@ server:
   port: 8888
 
 spring:
-  config:
-    import: secret/application-secret.yml
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -24,18 +22,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  redis:
-    host: redis
-    port: 6379
-    password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
-  servlet:
-    multipart:
-      max-file-size: 10MB
+  data:
+    redis:
+      host: 3.38.213.43
+      port: 6379
+      password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
 
 eureka:
   instance:
     hostname: ${EUREKA_HOSTNAME:localhost}
-#    instance-id: ${spring.application.instance_id:${random.value}}
+#    instance-id: ${EUREKA_HOSTNAME:localhost}:${spring.application.instance_id:${random.value}}# 외부에서 접근 가능한 호스트 이름 또는 IP
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -51,3 +47,11 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     use-root-path: true
+
+#springfox:
+#  documentation:
+#    swagger:
+#      v2:
+#        path: /api
+#    swagger-ui:
+#      base-url: /api

@@ -14,13 +14,13 @@ public class ChannelReader {
     @Schema(description = "원하는 최대 금액")
     private String name;
 
-    @Schema(description = "플랫폼")
+    @Schema(description = "원하는 최대 금액")
     private Platform platform;
 
-    @Schema(description = "채널 링크")
+    @Schema(description = "원하는 최대 금액")
     private String link;
 
-    @Schema(description = "팔로워 규모")
+    @Schema(description = "원하는 최대 금액")
     private Long followerScale;
 
     public ChannelReader(Channel channel) {
