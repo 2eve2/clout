@@ -1,9 +1,11 @@
 package com.mmm.clout.advertisementservice;
 
+import com.mmm.clout.advertisementservice.common.config.EnvConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +16,9 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableFeignClients
 @Slf4j
+@PropertySource(value = {
+		"classpath:secret/env.yml",
+}, factory = EnvConfig.class)
 public class AdvertisementServiceApplication {
 
 	public static void main(String[] args) {

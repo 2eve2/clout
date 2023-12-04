@@ -38,3 +38,7 @@ out/
 
 ### Querydsl
 /src/main/generated
+
+### secret
+application-secret.yml
+env.yml

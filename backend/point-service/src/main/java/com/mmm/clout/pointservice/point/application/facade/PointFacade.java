@@ -1,18 +1,21 @@
 package com.mmm.clout.pointservice.point.application.facade;
 
+import com.mmm.clout.pointservice.point.application.AddPointProcessor;
 import com.mmm.clout.pointservice.point.application.ChargePointProcessor;
+import com.mmm.clout.pointservice.point.application.CreatePointProcessor;
 import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.GetTransactionListByCategoryProcessor;
 import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
 import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
+import com.mmm.clout.pointservice.point.application.command.AddPointCommand;
 import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
 import com.mmm.clout.pointservice.point.application.command.WithdrawCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
-import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,16 +27,18 @@ public class PointFacade {
     private final WithdrawPointProcessor withdrawPointProcessor;
     private final GetMemberPointProcessor getMemberPointProcessor;
     private final GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor;
+    private final AddPointProcessor addPointProcessor;
+    private final CreatePointProcessor createPointProcessor;
 
-    public void charge(ChargeCommand command) {
-        chargePointProcessor.execute(command.getMemberId(), command.getChargePoint(),  command.getPaymentType());
+    public PointTransaction charge(ChargeCommand command) {
+        return chargePointProcessor.execute(command);
     }
 
-    public void reduce(ReduceCommand command) {
-        reducePointProcessor.execute(command.getMemberId(), command.getReducingPoint(), command.getPointCategory());
+    public PointTransaction reduce(ReduceCommand command) {
+        return reducePointProcessor.execute(command);
     }
 
-    public void withdraw(WithdrawCommand command) {
+    public void withdrawal(WithdrawCommand command) {
         withdrawPointProcessor.execute(command);
     }
 
@@ -41,7 +46,19 @@ public class PointFacade {
         return getMemberPointProcessor.execute(memberId);
     }
 
-    public List<PointTransaction> getTransactionListByCategory(Long memberId, String category) {
-        return getTransactionListByCategoryProcessor.execute(memberId, category);
+    public Page<PointTransaction> getTransactionListByCategory(
+        Long memberId,
+        String category,
+        PageRequest pageable
+    ) {
+        return getTransactionListByCategoryProcessor.execute(memberId, category, pageable);
+    }
+
+    public PointTransaction add(AddPointCommand command) {
+        return addPointProcessor.execute(command);
+    }
+
+    public Point create(Long memberId) {
+        return createPointProcessor.execute(memberId);
     }
 }
