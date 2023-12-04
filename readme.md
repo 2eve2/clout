@@ -26,7 +26,7 @@
 
 ---
 ## 🗓 프로젝트 진행 기간
-`2023.10.09 ~ 2023.11.17 (약 6주)`
+`2023.10.09 ~ 2023.11.17 (약 7주)`
 
 ---
 ## 📑 주제
@@ -227,7 +227,7 @@ https://www.figma.com/file/WjO2jnGE6aETJN6TuhmHYj/CLOUT?type=design&node-id=0%3A
 1. Clone Project
 
 ```
-git clone https://lab.ssafy.com/s09-bigdata-recom-sub2/S09P22A305.git
+git clone https://github.com/DJ-archive/clout.git
 ```
 
 2. change path to /front_temp/frontend
@@ -238,7 +238,8 @@ flutter pub get
 3. create .env file
 
 ```
-# .env
+# env.yml
+# application-secret.yml
 CLOUT_APP_BASE_URL='https://clouter.kr'
 ```
 4.frontend start
