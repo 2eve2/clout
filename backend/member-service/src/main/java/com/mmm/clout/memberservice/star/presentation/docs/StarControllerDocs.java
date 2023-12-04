@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Tag(name = "별점 CRUD", description = "별점을 관리하는 api")
+@Tag(name = "별점 CRUD", description = "별점을 api")
 public interface StarControllerDocs {
 
 

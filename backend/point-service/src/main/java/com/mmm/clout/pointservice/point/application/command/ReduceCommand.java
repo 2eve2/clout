@@ -14,7 +14,5 @@ public class ReduceCommand {
 
     private PointCategory pointCategory;
 
-    private String counterParty;
-
 
 }

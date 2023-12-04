@@ -25,8 +25,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 public class PointTransaction extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_transaction_id")
     private Long id;
 
@@ -50,12 +49,11 @@ public class PointTransaction extends BaseEntity {
     private String counterparty;
 
     public PointTransaction(Point point, Long amount, PointStatus pointStatus,
-        PointCategory pointCategory, String counterparty) {
+        PointCategory pointCategory) {
         this.point = point;
         this.amount = amount;
         this.pointStatus = pointStatus;
         this.pointCategory = pointCategory;
-        this.counterparty = counterparty;
     }
 
     public static PointTransaction charge(Point point, Long chargePoint) {
@@ -63,33 +61,16 @@ public class PointTransaction extends BaseEntity {
             point,
             chargePoint,
             PointStatus.PLUS,
-            PointCategory.CHARGE,
-            PointCategory.CHARGE.getDescription()
+            PointCategory.CHARGE
         );
     }
 
-    public static PointTransaction reduce(
+    public static PointTransaction usePoint(
         Point point,
         Long reducingPoint,
-        PointCategory pointCategory,
-        String counterParty
-    ) {
-        // 계약일 경우, 거래 상대방 표시
-        if (pointCategory == PointCategory.CONTRACT
-            || pointCategory == PointCategory.CANCEL_CONTRACT
-        ) {
-            return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, counterParty);
-        }
-        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, pointCategory.getDescription());
-    }
+        PointCategory pointCategory
 
-    public static PointTransaction add(Point point, Long addingPoint, PointCategory pointCategory, String counterParty) {
-        // 계약일 경우, 거래 상대방 표시
-        if (pointCategory == PointCategory.CONTRACT
-            || pointCategory == PointCategory.CANCEL_CONTRACT
-        ) {
-            return new PointTransaction(point, addingPoint, PointStatus.PLUS, pointCategory, counterParty);
-        }
-        return new PointTransaction(point, addingPoint, PointStatus.PLUS, pointCategory, pointCategory.getDescription());
+    ) {
+        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory);
     }
 }
