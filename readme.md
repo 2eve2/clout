@@ -21,7 +21,7 @@
 	- [❤ 팀원 소개](#-팀원-소개)
 		- [프론트](#프론트)
 		- [백](#백)
-<!-- <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small> -->
+		<!-- <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small> -->
 
 
 ---
@@ -116,8 +116,8 @@
 
 **Database |** mariaDB 10.11.0, mongoDB7.0.2, redis 7.2.3 
 
-
 <br></br>
+
 ### 프론트엔드
 
 **Language |** Dart  3.1.3
@@ -181,8 +181,8 @@
   device_info: ^2.0.0
 </div>
 </details>
-
 <br></br>
+
 ### 인프라
 
 **Infra |** docker 24.0.7, docker-compose 2.21.0, nginx 1.18.0 (Ubuntu), Apache kafka 3.5.1
@@ -249,7 +249,7 @@ flutter run
 
 ---
 ## 💾 결과물
-    
+
 ### UCC
 https://youtu.be/uBcELRAjBkY?si=qOI_ezoIwEhihsSa
 
