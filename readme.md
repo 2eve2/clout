@@ -55,48 +55,43 @@
 ---
 ## 🖥 서비스 화면
 
-<details>
-<summary>메인 페이지</summary>
+
+### 1. 메인 페이지
 <div markdown="1">       
     <img src="/readme/1.png" alt="랜딩"/>
     <img src="/readme/2.png" alt="랜딩"/>
 </div>
-</details>
 
-<details>
-<summary>목록</summary>
+
+### 2. 목록
 <div markdown="1">       
     <img src="/readme/3.png" alt="목록"/>
     <img src="/readme/4.png" alt="목록"/>
 </div>
-</details>
 
-<details>
-<summary>캠페인</summary>
+
+### 3. 캠페인
 <div markdown="1">       
     <img src="/readme/5-1.png" alt="캠페인"/>
 </div>
-</details>
 
 
-<details>
-<summary>마이페이지</summary>
+
+### 3. 마이페이지
 <div markdown="1">       
     <img src="/readme/6.png" alt="마이페이지"/>
     <img src="/readme/7-1.png" alt="마이페이지"/>
     <img src="/readme/7-2.png" alt="마이페이지"/>
     <img src="/readme/11.png" alt="마이페이지"/>
 </div>
-</details>
 
-<details>
-<summary>계약</summary>
+
+### 4. 계약
 <div markdown="1">       
     <img src="/readme/8.png" alt="계약"/>
     <img src="/readme/9.png" alt="계약"/>
     <img src="/readme/10.png" alt="계약"/>
 </div>
-</details>
 
 
 ---
@@ -197,27 +192,21 @@
 ## 📝 설계 문서
 
 ### ERD
-<details>
-<summary>ERD</summary>
 <div markdown="1">       
     <img src="/readme/erd.png" alt="ERD 페이지"/>
 </div>
-</details>
+
 
 
 ### API
-<details>
-<summary>API 문서</summary>
+API 문서
 <div markdown="1">       
     <img src="/readme/api.png" alt="전체 문서 페이지"/>
 </div>
-</details>
+
 
 
 ### FIGMA
-<details>
-<summary>FIGMA</summary>
-
 https://www.figma.com/file/WjO2jnGE6aETJN6TuhmHYj/CLOUT?type=design&node-id=0%3A1&mode=design&t=W1Kq05ieH90WM4hs-1
 
 </details> 
