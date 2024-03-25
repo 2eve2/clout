@@ -267,4 +267,4 @@ https://youtu.be/uBcELRAjBkY?si=qOI_ezoIwEhihsSa
 
 |![](https://avatars.githubusercontent.com/u/102864363?v=4)|![](https://avatars.githubusercontent.com/u/58822617?v=4)| ![](https://avatars.githubusercontent.com/u/81962036?v=4)| 
 |:---------:|:--------:|:---------:|
-| [김민식](https://github.com/DUDINGDDI)| [윤다정](https://github.com/DJ-archive) | [정승구](https://github.com/jsggo2001)| 
+| [김민식](https://github.com/DUDINGDDI)| [윤다정](https://github.com/2eve2) | [정승구](https://github.com/jsggo2001)| 
